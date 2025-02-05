@@ -95,7 +95,22 @@ function addTask() {
     document.getElementById("taskInput").value = "";
     document.getElementById("urlInput").value = "";
     document.getElementById("dateInput").value = "";
+    downloadJSON();
+
 }
+
+function downloadJSON() {
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    let jsonData = JSON.stringify(tasks, null, 4);
+    let blob = new Blob([jsonData], { type: "application/json" });
+    let a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "ders_takip_verileri.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
 
 function toggleTask(index) {
     if (isLocked) return;
